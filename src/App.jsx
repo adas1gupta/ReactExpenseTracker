@@ -9,8 +9,8 @@ function App () {
     const [expenseAmount, setExpenseAmount] = useState(0.00)
 
     const handleAdd = () => {
-        if (expenseName && expenseAmount) {
-            const expenseObject = { name: expenseName, amount: expenseAmount }
+        if (expenseName && !isNaN(expenseAmount) && parseFloat(expenseAmount) > 0) {
+            const expenseObject = { name: expenseName, amount: parseFloat(expenseAmount) }
             setExpenses([...expenses, expenseObject])
             setExpenseName("")
             setExpenseAmount(0.00)
