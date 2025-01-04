@@ -2,6 +2,31 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import ExpenseForm from "./ExpenseForm";
 import Expense from "./Expense";
+import ErrorBoundary from "./ErrorBoundary";
+
+function ErrorBoundaryWrappedExpenseForm (props) {
+    return (
+        <ErrorBoundary>
+            <ExpenseForm {...props}/>
+        </ErrorBoundary>
+    )
+}
+
+function ErrorBoundaryWrappedApp (props) {
+    return (
+        <ErrorBoundary>
+            <App />
+        </ErrorBoundary>
+    )
+}
+
+function ErrorBoundaryWrappedExpense (props) {
+    return (
+        <ErrorBoundary>
+            <Expense {...props}/>
+        </ErrorBoundary>
+    )
+}
 
 function App () {
     const [expenses, setExpenses] = useState([])
@@ -14,6 +39,8 @@ function App () {
             setExpenses([...expenses, expenseObject])
             setExpenseName("")
             setExpenseAmount(0.00)
+        } else {
+            alert("Please enter a valid expense amount greater than 0.");
         }
     }
 
@@ -25,12 +52,12 @@ function App () {
 
     return (
         <div>
-            <ExpenseForm
+            <ErrorBoundaryWrappedExpenseForm
                 setExpenseName={setExpenseName}
                 setExpenseAmount={setExpenseAmount}
                 handleAdd={handleAdd}
             >
-                Expense Form:</ExpenseForm>
+                Expense Form:</ErrorBoundaryWrappedExpenseForm>
             <p>
                 Total Expense:
                 {
@@ -42,7 +69,7 @@ function App () {
             <div>
             {(expenses.length > 0) ? (
                 expenses.map((expense, index) => (
-                    <Expense
+                    <ErrorBoundaryWrappedExpense
                         key={index}
                         index={index}
                         expenseName={expense.name}
@@ -63,7 +90,7 @@ const container = document.getElementById("root")
 const root = createRoot(container)
 root.render(
     <React.StrictMode>
-        <App />
+        <ErrorBoundaryWrappedApp />
     </React.StrictMode>
 )
 
