@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import ExpenseForm from "./ExpenseForm";
 import Expense from "./Expense";
 import ErrorBoundary from "./ErrorBoundary";
+import { useState } from "react";
 
 function ErrorBoundaryWrappedExpenseForm (props) {
     return (
@@ -20,13 +21,6 @@ function ErrorBoundaryWrappedApp (props) {
     )
 }
 
-function ErrorBoundaryWrappedExpense (props) {
-    return (
-        <ErrorBoundary>
-            <Expense {...props}/>
-        </ErrorBoundary>
-    )
-}
 
 function App () {
     const [expenses, setExpenses] = useState([])
@@ -59,7 +53,7 @@ function App () {
             >
                 Expense Form:</ErrorBoundaryWrappedExpenseForm>
             <p>
-                Total Expense:
+                {"Total Expense: "}
                 {
                     expenses.reduce((totalExpenses, expense) => {
                         return totalExpenses + expense.amount
@@ -69,7 +63,7 @@ function App () {
             <div>
             {(expenses.length > 0) ? (
                 expenses.map((expense, index) => (
-                    <ErrorBoundaryWrappedExpense
+                    <Expense
                         key={index}
                         index={index}
                         expenseName={expense.name}

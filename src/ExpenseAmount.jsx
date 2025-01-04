@@ -7,7 +7,7 @@ function ExpenseAmount ({expenseAmount, setExpenseAmount}) {
                 id="expense-amount"
                 value={expenseAmount}
                 onChange={(e) => setExpenseAmount(e.target.value)}
-                placeholder="Enter the amount of the expense"
+                placeholder="0.00"
             />
         </div>
     )
